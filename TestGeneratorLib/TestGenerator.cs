@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace TestGeneratorLib
 {
@@ -14,10 +13,10 @@ namespace TestGeneratorLib
             codeGenerator = new CodeGenerator();
         }
 
-        public async Task<List<TestGenerationResult>> GenerateTestsForCode(string code)
+        public List<TestGenerationResult> GenerateTestsForCode(string code)
         {
-            List<ClassInfo> classInfos = syntaxAnalyzer.GetClassInfoListForCode(code);
-            return codeGenerator.GenerateTestsForClasses(classInfos);
+            NamespaceInfo namespaceInfo = syntaxAnalyzer.GetNamespaceInfoForCode(code);
+            return codeGenerator.GenerateTestsForClasses(namespaceInfo);
         }
     }
 }

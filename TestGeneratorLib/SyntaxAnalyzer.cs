@@ -8,10 +8,12 @@ namespace TestGeneratorLib
 {
     class SyntaxAnalyzer
     {
-        public List<ClassInfo> GetClassInfoListForCode(string code)
+        public NamespaceInfo GetNamespaceInfoForCode(string code)
         {
             SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(code);
             CompilationUnitSyntax root = syntaxTree.GetCompilationUnitRoot();
+
+            List<string> usings = GetUsingsList(root.DescendantNodes());
 
 
             List<ClassInfo> classInfoList = new List<ClassInfo>();
@@ -21,7 +23,12 @@ namespace TestGeneratorLib
                 classInfoList.Add(CreateClassInfo(classDeclaration));
             }
 
-            return classInfoList;
+            return new NamespaceInfo(usings, classInfoList);
+        }
+
+        private List<string> GetUsingsList(IEnumerable<SyntaxNode> members)
+        {
+            return members.OfType<UsingDirectiveSyntax>().Select(usingSyntax => usingSyntax.Name.ToString()).ToList();
         }
 
         private List<ClassDeclarationSyntax> SelectClassDeclarationsFrom(IEnumerable<SyntaxNode> syntaxNodes)

@@ -11,13 +11,13 @@ namespace TestGeneratorLib
 {
     class CodeGenerator
     {
-        private readonly string[] DEFAULT_USINGS =
+        private readonly List<string> DEFAULT_USINGS = new List<string>
         {
             "Xunit",
             "System",
             "System.Collections.Generic",
             "System.Text",
-            "using Moq"
+            "Moq"
         };
         private readonly string VOID_KEYWORD = "void";
 
@@ -39,21 +39,23 @@ namespace TestGeneratorLib
         private readonly string MOCK_CREATION_FORMAT = "new Mock<{0}>()";
         private readonly string MOCK_OBJECT_ACCESS_FORMAT = "{0}.Object";
 
-        public List<TestGenerationResult> GenerateTestsForClasses(List<ClassInfo> classInfos)
+        public List<TestGenerationResult> GenerateTestsForClasses(NamespaceInfo namespaceInfo)
         {
             List<TestGenerationResult> testGenerationResults = new List<TestGenerationResult>();
-            foreach (ClassInfo classInfo in classInfos)
+            foreach (ClassInfo classInfo in namespaceInfo.Classes)
             {
-                testGenerationResults.Add(GetTestGenerationResult(classInfo));
+                testGenerationResults.Add(GetTestGenerationResult(classInfo, namespaceInfo.Usings));
             }
             return testGenerationResults;
         }
 
-        private TestGenerationResult GetTestGenerationResult(ClassInfo classInfo)
+        private TestGenerationResult GetTestGenerationResult(ClassInfo classInfo, List<string> usings)
         {
             var compilationUnit = SF.CompilationUnit();
             AddDefaultUsings(ref compilationUnit);
+            AddMissingdUsings(ref compilationUnit, DEFAULT_USINGS, usings);
             AddUsing(ref compilationUnit, classInfo.NamespaceName);
+
 
             NamespaceDeclarationSyntax namespaceDeclaration = SF.NamespaceDeclaration(
                         SF.ParseName(classInfo.NamespaceName + "." + CLASS_TEST_POSTFIX));
@@ -75,6 +77,17 @@ namespace TestGeneratorLib
             }
         }
 
+        private void AddMissingdUsings(ref CompilationUnitSyntax compilationUnit, List<string> addedUsings, List<string> usings)
+        {
+            foreach (string usingName in usings)
+            {
+                if (!addedUsings.Contains(usingName))
+                {
+                    AddUsing(ref compilationUnit, usingName);
+                }
+            }
+        }
+
         private void AddUsing(ref CompilationUnitSyntax compilationUnit, string usingName)
         {
             compilationUnit = compilationUnit.AddUsings(SF.UsingDirective(SF.ParseName(usingName)));
@@ -84,7 +97,7 @@ namespace TestGeneratorLib
         {
             String testClassObjectName = GetObjectNameForClass(classInfo.Name);
 
-            var classDeclaration = SF.ClassDeclaration(testClassName);
+            var classDeclaration = SF.ClassDeclaration(testClassName).WithModifiers(SF.TokenList(SF.Token(SyntaxKind.PublicKeyword)));
 
             FieldDeclarationSyntax testObjectDeclaration = GetPrivateFieldDeclaration(classInfo.Name, testClassObjectName);
             List<FieldDeclarationSyntax> interfaceDeclarations = GetInterfaceDeclarations(classInfo.ConstructorParametres);
@@ -146,7 +159,7 @@ namespace TestGeneratorLib
                 localDeclarations.Add(GetSetupVariableDeclaration(parameter));
             }
 
-            AssignmentExpressionSyntax constructorInvocation = GetConstructorInvokation(testClassName, constructorParametres);
+            AssignmentExpressionSyntax constructorInvocation = GetConstructorInvokation(className, constructorParametres);
 
             methodBodyBlock = methodBodyBlock.AddStatements(localDeclarations.ToArray())
                 .AddStatements(SF.ExpressionStatement(constructorInvocation));

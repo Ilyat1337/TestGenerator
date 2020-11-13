@@ -3,6 +3,21 @@ using System.Collections.Generic;
 
 namespace TestGeneratorLib
 {
+    internal class NamespaceInfo
+    {
+        public List<string> Usings
+        { get; }
+
+        public List<ClassInfo> Classes
+        { get; }
+
+        public NamespaceInfo(List<string> usings, List<ClassInfo> classes)
+        {
+            Usings = usings;
+            Classes = classes;
+        }
+    }
+
     internal class ClassInfo
     { 
         public string NamespaceName
