@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestGeneratorLib", "TestGen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestGeneratorDemo", "TestGeneratorDemo\TestGeneratorDemo.csproj", "{FE157CD3-8B39-4F1F-84FF-9E6A81757824}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyForTests", "AssemblyForTests\AssemblyForTests.csproj", "{47EDE9BC-6A5A-4004-9B98-2BEFC2831C12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyForTests", "AssemblyForTests\AssemblyForTests.csproj", "{47EDE9BC-6A5A-4004-9B98-2BEFC2831C12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyForTests.Tests", "AssemblyForTests.Tests\AssemblyForTests.Tests.csproj", "{DA98C585-F898-4A13-AB2C-9022CCBA0821}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyForTests.Tests", "AssemblyForTests.Tests\AssemblyForTests.Tests.csproj", "{DA98C585-F898-4A13-AB2C-9022CCBA0821}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGeneratorLib.Tests", "TestGeneratorLib.Tests\TestGeneratorLib.Tests.csproj", "{02A0551F-0445-47BE-A914-49667A7A36F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{DA98C585-F898-4A13-AB2C-9022CCBA0821}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA98C585-F898-4A13-AB2C-9022CCBA0821}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA98C585-F898-4A13-AB2C-9022CCBA0821}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02A0551F-0445-47BE-A914-49667A7A36F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02A0551F-0445-47BE-A914-49667A7A36F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02A0551F-0445-47BE-A914-49667A7A36F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02A0551F-0445-47BE-A914-49667A7A36F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
