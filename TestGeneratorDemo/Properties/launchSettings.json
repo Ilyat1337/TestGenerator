@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TestGeneratorDemo": {
+      "commandName": "Project",
+      "commandLineArgs": "\"D:\\!Университет\\5 семестр\\СПП\\TestGenerator\\AssemblyForTests\" \"D:\\!Университет\\5 семестр\\СПП\\TestGenerator\\AssemblyForTests.Tests\\Generated\" 6"
+    }
+  }
+}
